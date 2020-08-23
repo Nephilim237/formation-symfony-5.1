@@ -1,0 +1,11 @@
+.home-card-image {
+    display: block;
+    height: 200px;
+    width: 100%;
+}
+
+.home-card-profil {
+    display: inline-block;
+    height: 64px;
+    width: 64px;
+}
