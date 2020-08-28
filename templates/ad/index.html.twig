@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les chimamelures des annonces{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Les chimamelures des annonces</h1>
+        <div class="row">
+            {% for ad in ads %}
+                {% set url = path('ads_show', {'slug' : ad.slug}) %}
+                <div class="col-md-4">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header text-center">
+                            {{ ad.rooms }} chambres, <strong>{{ ad.price }} Fcfa / nuit</strong><br>
+                            <small>Pas encore note</small>
+                        </div>
+                        <a href="{{ url }}">
+                            <img src="{{ ad.coverImage }}" alt="Image de l'appartement" class="home-card-image">
+                        </a>
+                        <div class="card-body">
+                            <a href="{{ url }}">
+                                <h4 class="card-title">
+                                    {{ ad.title }}
+                                </h4>
+                            </a>
+                            <p class="card-text">
+                                {{ ad.introduction }}
+                            </p>
+                            <a href="{{ url }}" class="btn btn-secondary">Plus d'info!</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

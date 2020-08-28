@@ -1,3 +1,7 @@
+:root {
+    --nn-white: #f4fcfd;
+}
+
 .home-card-image {
     display: block;
     height: 200px;
@@ -8,4 +12,19 @@
     display: inline-block;
     height: 64px;
     width: 64px;
+}
+
+div.nn-ad-title {
+    padding: 3rem;
+    background-size: cover;
+    background-position: center center;
+}
+
+div.nn-ad-title h1, div.nn-ad-title p {
+    color: var(--nn-white);
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+}
+
+.carousel-caption {
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
 }

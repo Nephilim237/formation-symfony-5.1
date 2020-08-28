@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Ajouter une annonce {% endblock %}
+
+{% form_theme form 'ad/_collection.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Ajouter une annonce</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer l'annonce</button>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="/dist/js/ad.js"></script>
+{% endblock %}
