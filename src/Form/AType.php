@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AType extends AbstractType
+class AType extends ApplicationType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -70,21 +70,5 @@ class AType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Ad::class,
         ]);
-    }
-
-    /**
-     * @param string $label
-     * @param string|null $attrElt
-     * @param array $options
-     * @return array
-     */
-    private function getAttributes(string $label, ?string $attrElt = '...', array $options = []): array
-    {
-        return array_merge([
-          'label' => $label,
-            'attr' => [
-              'placeholder' => $attrElt
-          ],
-        ], $options);
     }
 }

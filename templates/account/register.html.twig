@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous rejoindre {% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="font-weight-normal text-primary">S'inscrire</h2>
+
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

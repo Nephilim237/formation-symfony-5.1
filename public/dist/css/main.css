@@ -28,3 +28,8 @@ div.nn-ad-title h1, div.nn-ad-title p {
 .carousel-caption {
     text-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
 }
+
+
+.navbar.bg-dark {
+     background-color: #343a40 !important;
+}
