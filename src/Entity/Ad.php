@@ -73,7 +73,7 @@ class Ad
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ads")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ads", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;

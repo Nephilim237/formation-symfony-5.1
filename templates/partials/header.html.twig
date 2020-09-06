@@ -15,7 +15,21 @@
         </ul>
         <ul class="navbar-nav">
             {% if app.user %}
-                <li class="nav-item"><a href="{{ path("account_logout") }}" class="nav-link">Déconnexion</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
+                        <span class="nn-dropdownName">{{ app.user.fullName }}</span>
+                        <img src="{{ app.user.picture }}" alt="Image de {{ app.user.fullName }}" class="nn-avatar avatar-mini">
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                        <a href="{{ path('ads_new') }}" class="dropdown-item">Nouvelle annonce <i class="fas fa-plus"></i></a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ path('account_index') }}" class="dropdown-item">Mon compte <i class="fas fa-user-cog"></i></a>
+                        <a href="{{ path('account_profile') }}" class="dropdown-item">Modifier mon profil <i class="fas fa-user-edit"></i></a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ path('account_logout') }}" class="dropdown-item">Déconnexion <i class="fas fa-door-open"></i></a>
+                    </div>
+                </li>
 
             {% else %}
                 <li class="nav-item"><a href="{{ path("account_login") }}" class="nav-link">Se connecter</a></li>

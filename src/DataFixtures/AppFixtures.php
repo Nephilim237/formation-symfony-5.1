@@ -31,11 +31,11 @@ class AppFixtures extends Fixture
         $users = [];
         $genres = ['male', 'female'];
         for ($i = 0; $i < 10; $i++){
-            $avatarUrl = 'https://randomuser.me/api/protraits/';
+            $avatarUrl = 'https://randomuser.me/api/portraits/';
             $avatarId = $faker->numberBetween(1, 99) . '.jpg';
             $genre = $faker->randomElement($genres);
 
-            $avatarUrl .= ($genre == 'male' ? 'men/' : 'female/') . $avatarId;
+            $avatarUrl .= ($genre == 'male' ? 'men/' : 'women/') . $avatarId;
 
             $user = new User();
 
@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
             $ad->setTitle($title)
                 ->setIntroduction($faker->paragraph(2))
                 ->setContent('<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>')
-                ->setCoverImage($faker->imageUrl(1000,350))
+                ->setCoverImage($faker->imageUrl(1000,300))
                 ->setPrice(mt_rand(90000, 400000))
                 ->setRooms(mt_rand(1, 6))
                 ->setAuthor($user)
@@ -70,7 +70,7 @@ class AppFixtures extends Fixture
 
             for ($j = 0; $j < mt_rand(2, 5); $j++){
                 $image = new Image();
-                $image->setUrl($faker->imageUrl())
+                $image->setUrl($faker->imageUrl(1000, 350))
                     ->setCaption($faker->sentence())
                     ->setAd($ad)
                 ;
@@ -80,6 +80,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($ad);
         }
+
         $manager->flush();
     }
 }

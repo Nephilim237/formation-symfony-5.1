@@ -22,7 +22,7 @@ class AdController extends AbstractController
     public function index(AdRepository $repo)
     {
         $ads = $repo->findAll();
-        return $this->render('ad/login.html.twig', [
+        return $this->render('ad/index.html.twig', [
             'ads' => $ads,
         ]);
     }
@@ -47,6 +47,8 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $manager->persist($image);
             }
+
+            $ad->setAuthor($this->getUser());
             $manager->persist($ad);
             $manager->flush();
 

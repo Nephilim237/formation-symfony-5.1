@@ -12,8 +12,8 @@
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 mb-3">
+        <div class="row nn-ad-wrapper">
+            <div class="col-md-8 mb-3 nn-ad-info">
                 {{ ad.content | raw }}
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -43,22 +43,22 @@
                     </a>
                 </div>
             </div>
-            <div class="col">
+            <div class="col nn-ad-user-info">
                 <div class="row">
-                    <div class="col-4">
-                        <img src="/dist/img/12.png" alt="S Le Nephilim">
+                    {% set u = ad.author %}
+                    <div class="col-3">
+                        <a href="{{ path('user_show', {'slug' : u.slug}) }}">
+                            <img src="{{ u.picture }}" alt="{{ u.fullName }}" class="nn-avatar avatar-medium">
+                        </a>
                     </div>
                     <div class="col">
-                        <h3>S Le Nephilim</h3>
-                        <span class="badge badge-primary">03 annonces</span>
+                        <h3><a href="{{ path('user_show', {'slug' : u.slug}) }}">
+                                {{ u.fullName }}
+                        </a></h3>
+                        <span class="nn-email"><a href="mailto:{{ u.email }}">{{ u.email }}</a></span>
+                        <span class="badge badge-primary">{{ u.ads | length }} annonces</span>
                     </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, cumque dolore nobis perspiciatis
-                    placeat possimus quaerat quisquam sed voluptatibus voluptatum!</p>
-                <p>Consequatur, deserunt dolorum ea exercitationem explicabo fuga fugit optio porro, reiciendis rem, sed
-                    sequi sit suscipit ut veritatis voluptas voluptatem.</p>
-                <p>Animi consequatur deleniti hic in inventore modi porro quas reprehenderit soluta. Aperiam asperiores
-                    eius minus, molestiae quae quas temporibus tenetur?</p>
+                    {{ u.description | raw }}
             </div>
         </div>
     </div>

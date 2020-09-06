@@ -6,6 +6,7 @@
     display: block;
     height: 200px;
     width: 100%;
+    padding: .5rem;
 }
 
 .home-card-profil {
@@ -32,4 +33,32 @@ div.nn-ad-title h1, div.nn-ad-title p {
 
 .navbar.bg-dark {
      background-color: #343a40 !important;
+}
+
+.nn-avatar {
+    max-height: 128px;
+    max-width: 128px;
+    border-radius: 50%;
+}
+
+.avatar-medium {
+    max-height: 64px;
+    max-width: 64px;
+}
+
+.avatar-mini {
+    max-height: 32px;
+    max-width: 32px;
+}
+
+.nn-ad-wrapper {
+    padding-top: 2.5rem;
+}
+
+.nn-ad-user-info {
+    margin-left: 1rem;
+}
+
+.nn-ad-info {
+
 }

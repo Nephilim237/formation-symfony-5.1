@@ -71,7 +71,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("account/profile", name="name_profile")
+     * @Route("account/profile", name="account_profile")
      * @param Request $request
      * @param ObjectManager $manager
      * @return Response
