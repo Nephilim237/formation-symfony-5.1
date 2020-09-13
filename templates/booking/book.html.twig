@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Faire une reservation{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/dist/css/bootstrap-datepicker-1.9.0.min.css" />
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="font-weight-normal">Reservation pour <strong class="text-primary">{{ ad.title }}</strong></h1>
+
+        <p>Cette annonce a ete publiee par <strong class="text-primary h3">{{ ad.author.fullName }}</strong></p>
+
+        {{ form_start(form) }}
+            <div class="alert alert-dark text-white-50">
+                <h2>Merci de renseigner les dates voulues</h2>
+                <div class="row">
+                    <div class="col-4">
+                        {{ form_row(form.startDate) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_row(form.endDate) }}
+                    </div>
+                </div>
+                <p class="font-weight-normal h4">
+                    Ce sejour vous coutera: <span id="nn-amount" class="text-success"><strong>...</strong></span> XAF.
+                    Soit <span id="nn-days" class="text-success"><strong>...</strong></span> nuit(s) a raison de <strong class="text-success">{{ ad.price | number_format('0', '.', ' ')}}</strong> XAF/nuit.
+                </p>
+
+                <h4>Avez vous des precisions a faire</h4>
+                <div class="col">
+                    {{ form_row(form.comments) }}
+                </div>
+
+                <h5 class="text-success">Vous y etes, finalisez votre reservation</h5>
+                <p class="h6">Peu importe votre preoccupation, peu importe vos soucis, et meme si en plus vous etes capricieux, nous vous satisfaisons</p>
+
+                <button class="btn btn-success">Je reserve!</button>
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="/dist/js/bootstrap-datepicker-1.9.0.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            let dateFields =  $("#booking_startDate, #booking_endDate");
+            $(dateFields).datepicker({
+                format: 'dd/mm/yyyy',
+                datesDisabled: [
+                    {% for day in ad.notAvailableDays %}
+                        "{{ day.format('d/m/Y') }}",
+                    {% endfor %}
+                ],
+                startDate: new Date(),
+            });
+
+            $(dateFields).on('change', calculatePrice);
+        })
+
+        function calculatePrice(){
+            const startDate = new Date($('#booking_startDate').val().replace(/(\d\d)\/(\d\d)\/(\d{4})/, '$3-$2-$1'));
+            const endDate = new Date($('#booking_endDate').val().replace(/(\d\d)\/(\d\d)\/(\d{4})/, '$3-$2-$1'));
+
+            if (startDate && endDate && startDate < endDate){
+                const TIMESTAMP_IN_DAY = 24 * 60 * 60 * 1000;
+
+                const interval = endDate.getTime() - startDate.getTime();
+                const days = interval / TIMESTAMP_IN_DAY;
+                const amount = days * {{ ad.price }};
+
+                $("#nn-amount").text(amount.toLocaleString('fr-FR'));
+                $("#nn-days").text(days);
+            }
+        }
+    </script>
+{% endblock %}

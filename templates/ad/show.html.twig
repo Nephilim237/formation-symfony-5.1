@@ -7,7 +7,12 @@
             <h1>{{ ad.title }}</h1>
             <p>{{ ad.introduction }}</p>
             <p class="h2"><strong> {{ ad.rooms }} chambres </strong> pour <strong>{{ ad.price }}Fcfa</strong> par nuit</p>
-            <a href="#" class="btn btn-primary">Reserver!</a>
+            <a href="{{ path('booking_create', {'slug' : ad.slug}) }}" class="btn btn-primary">Reserver!</a>
+
+            {% if app.user and app.user == ad.author %}
+                <a href="{{ path('ads_edit', {'slug' : ad.slug}) }}" class="btn btn-info">Modifier l'annonce</a>
+                <a href="{{ path('ads_delete', {'slug' : ad.slug}) }}" class="btn btn-danger" onclick="return confirm('Confirmer la suppression de l\'annonce?!')">Supprimer l'annonce</a>
+            {% endif %}
         </div>
     </div>
 
@@ -56,7 +61,7 @@
                                 {{ u.fullName }}
                         </a></h3>
                         <span class="nn-email"><a href="mailto:{{ u.email }}">{{ u.email }}</a></span>
-                        <span class="badge badge-primary">{{ u.ads | length }} annonces</span>
+                        <span class="badge badge-primary">{{ u.ads | length }} annonce{% if u.ads | length > 1 %}s{% endif %}</span>
                     </div>
                     {{ u.description | raw }}
             </div>

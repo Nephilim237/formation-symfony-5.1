@@ -8,6 +8,8 @@ use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +40,8 @@ class AccountController extends AbstractController
      * @Route("/logout", name="account_logout")
      */
     public function logout()
-    {}
+    {
+    }
 
     /**
      * @Route("/register", name="account_register")
@@ -53,7 +56,7 @@ class AccountController extends AbstractController
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
 
@@ -66,12 +69,15 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/register.html.twig', [
-           'form' => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 
     /**
      * @Route("account/profile", name="account_profile")
+     *
+     * @Security("is_granted('ROLE_USER')", message="Droit d'accès refusé")
+     *
      * @param Request $request
      * @param ObjectManager $manager
      * @return Response
@@ -82,7 +88,7 @@ class AccountController extends AbstractController
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 //            $manager->persist($user);
             $manager->flush();
 
@@ -96,6 +102,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("account/password-update", name="account_password")
+     * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Droit d'accès refusé")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @param ObjectManager $manager
@@ -110,8 +117,8 @@ class AccountController extends AbstractController
         $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
-            if (!password_verify($passwordUpdate->getOldPassword(), $user->getPassword())){
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!password_verify($passwordUpdate->getOldPassword(), $user->getPassword())) {
                 $form->get('oldPassword')->addError(new FormError('Actuel mot de passe erroné!'));
             } else {
                 $hash = $encoder->encodePassword($user, $passwordUpdate->getNewPassword());
@@ -129,5 +136,15 @@ class AccountController extends AbstractController
         return $this->render('account/password.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/account/bookings", name="account_bookings")
+     *
+     * @return Response
+     */
+    public function bookings()
+    {
+        return $this->render('account/bookings.html.twig');
     }
 }

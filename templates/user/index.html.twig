@@ -7,7 +7,7 @@
         <div class="row align-items-center">
             <div class="col-3 text-center">
                 <img src="{{ user.picture }}" alt="{{ user.fullName }}" class="nn-avatar mb-3"> <br>
-                <span class="badge badge-primary">{{ user.ads | length }} annonces</span>
+                <span class="badge badge-primary">{{ user.ads | length }} annonce{% if user.ads | length > 1 %}s{% endif %}</span>
             </div>
             <div class="col-9">
                 <h1>{{ user.fullName }}</h1>

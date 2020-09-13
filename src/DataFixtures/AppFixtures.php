@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ad;
+use App\Entity\Booking;
 use App\Entity\Image;
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -27,6 +29,24 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr_FR');
+
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstName('Stephane')
+            ->setLastName('Owe Ihiof')
+            ->setEmail('uchihastefan91@gmail.com')
+            ->setHash($this->encode->encodePassword($adminUser, 'Neph1l1m'))
+            ->setPicture('https://pbs.twimg.com/profile_images/988311425637605376/lmgBIpaa.jpg')
+            ->setIntroduction($faker->sentence())
+            ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(4)) . '</p>')
+            ->addUserRole($adminRole)
+        ;
+
+        $manager->persist($adminUser);
 
         $users = [];
         $genres = ['male', 'female'];
@@ -76,6 +96,28 @@ class AppFixtures extends Fixture
                 ;
 
                 $manager->persist($image);
+            }
+
+            for ($j = 0; $j < mt_rand(0, 10); $j++){
+                $booking = new Booking();
+
+                $duration = mt_rand(2, 10);
+                $booker = $users[mt_rand(0, count($users) - 1)];
+                $price = $ad->getPrice() * $duration;
+                $startDate = $faker->dateTimeBetween('-3 months');
+                $endDate = (clone $startDate)->modify("+$duration days");
+                $createdAt = $faker->dateTimeBetween('-6 months');
+
+                $booking->setBooker($booker)
+                    ->setAd($ad)
+                    ->setStartDate($startDate)
+                    ->setEndDate($endDate)
+                    ->setAmount($price)
+                    ->setCreatedAt($createdAt)
+                    ->setComments($faker->paragraph())
+                ;
+
+                $manager->persist($booking);
             }
 
             $manager->persist($ad);
