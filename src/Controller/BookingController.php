@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Entity\Booking;
+use App\Entity\Comment;
 use App\Form\BookingType;
+use App\Form\CommentType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,15 +46,15 @@ class BookingController extends AbstractController
                 $manager->persist($booking);
                 $manager->flush();
                 return $this->redirectToRoute('booking_show', [
-                    'id' => $booking->getId(),
-                    'g' => true
+                    'id'    => $booking->getId(),
+                    'g'     => true
                 ]);
             }
         }
 
         return $this->render('booking/book.html.twig', [
-            'ad' => $ad,
-            'form' => $form->createView()
+            'ad'    => $ad,
+            'form'  => $form->createView()
         ]);
     }
 
@@ -62,12 +64,31 @@ class BookingController extends AbstractController
      * @IsGranted("ROLE_USER")
      *
      * @param Booking $booking
+     * @param Request $request
+     * @param ObjectManager $manager
      * @return Response
      */
-    public function show(Booking $booking)
+    public function show(Booking $booking, Request $request, ObjectManager $manager)
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $comment->setAuthor($this->getUser())
+                    ->setAd($booking->getAd())
+            ;
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash('success', 'Commentaire pris en compte. Merci');
+        }
+
         return $this->render('booking/show.html.twig', [
-            'booking' => $booking
+            'booking' => $booking,
+            'form' => $form->createView()
         ]);
     }
 }

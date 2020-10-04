@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
-use App\Entity\Image;
 use App\Form\AType;
 use App\Repository\AdRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,13 +91,16 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $manager->persist($image);
             }
+            $slugify = new Slugify();
+            $slug = $slugify->slugify($ad->getTitle());
+            $ad->setSlug($slug);
+
             $manager->persist($ad);
             $manager->flush();
 
             $this->addFlash('success', "Article <strong> <em>{$ad->getTitle()}</em></strong> modifie avec succès");
             return $this->redirectToRoute('ads_show', ['slug' => $ad->getSlug()]);
         }
-
         return $this->render('ad/edit.html.twig', [
             'form' => $form->createView(),
             'ad' => $ad

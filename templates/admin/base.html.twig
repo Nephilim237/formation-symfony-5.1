@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+
+    <title> NephBNB - {% block title %}Administration!{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/dist/css/bootstrap-4.5.2.min.css">
+    <link rel="stylesheet" href="/dist/css/main.css">
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body>
+
+{% include 'admin/partials/header.html.twig' %}
+
+
+{% block body %}{% endblock %}
+
+{% include 'admin/partials/footer.html.twig' %}
+
+<script type="text/javascript" src="/dist/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/dist/js/popper-1.16.1.min.js"></script>
+<script type="text/javascript" src="/dist/js/bootstrap-4.5.2.min.js"></script>
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>

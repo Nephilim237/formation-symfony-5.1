@@ -1,0 +1,147 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edition de {{ ad.title }}{% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        <div class="col-10 mx-auto">
+            <h2 class="font-weight-normal text-center">Editer <span class="text-primary ">{{ ad.title }}</span></h2>
+            {{ form_start(form) }}
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card bg-dark text-white-50">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h4 class="text-success font-weight-normal text-center">Corriger l'annonce</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-primary">
+                                Enregistrer
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-dark text-white">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h4 class="text-success font-weight-normal text-center">Les reservations</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-white">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Voyageur</th>
+                                    <th>Date de reservation</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in ad.bookings %}
+                                        <tr>
+                                            <td>{{ booking.id }}</td>
+                                            <td>{{ booking.booker.fullName }}</td>
+                                            <td>{{ booking.createdAt | date('d/m/y H:i') }}</td>
+                                            <td></td>
+                                            <td>
+                                                <a href="#" class="btn btn-primary">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card bg-dark text-white mt-5"><!-- card comment block -->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h4 class="text-success font-weight-normal text-center">Commentaires</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-white">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Voyageur</th>
+                                    <th>Note</th>
+                                    <th>Commentaire</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for comment in ad.comments %}
+                                        <tr>
+                                            <td>{{ comment.id }}</td>
+                                            <td>{{ comment.author.fullName }}</td>
+                                            <td><span class="badge badge-primary">{{ comment.rating }}</span></td>
+                                            <td>{{ comment.content }}</td>
+                                            <td>
+                                                <a href="#" class="btn btn-primary">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block _a_images_widget %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _a_images_entry_row %}
+    <div id="block_{{ id }}">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block _a_images_entry_widget %}
+    <div class="row align-items-center my-1">
+        <div class="col-sm-2">
+            {% if value %}
+                <img src="{{ value.url }}" alt="" class="img-fluid">
+            {% endif %}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.url) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.caption) }}
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{ id }}">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('[data-action="delete"]').on('click', function(){
+               const target = this.dataset.target;
+               $(target).remove();
+            });
+        });
+    </script>
+{% endblock %}

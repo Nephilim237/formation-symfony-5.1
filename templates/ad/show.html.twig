@@ -20,7 +20,7 @@
         <div class="row nn-ad-wrapper">
             <div class="col-md-8 mb-3 nn-ad-info">
                 {{ ad.content | raw }}
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div id="carouselExampleIndicators" class="carousel slide mb-3" data-ride="carousel">
                     <ol class="carousel-indicators">
                         {% for image in ad.images %}
                         <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>
@@ -47,6 +47,53 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+                <hr>
+
+                {#     gestion de l'affichage des commentaires des avis et des notes laisses par des clients      #}
+                {% if ad.comments | length > 0 %}
+                    <h3 class="font-weight-normal my-3 pl-3">Commentaires et avis laisses par nos clients</h3>
+
+{#                    Affichage de la moyenne de notes donnees  #}
+                    <div class="alert alert-info">
+                        <h4 class="alert-heading text-center">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    Note globale de cette annonce
+                                </div>
+                                <div class="col-md-4">
+                                    {% include "partials/rating.html.twig" with {'rating' : ad.avgRatings} %}
+                                    <br>
+                                    <small>(calculée sur <strong>{{ ad.comments | length }}</strong> avis)</small>
+                                </div>
+                            </div>
+                        </h4>
+                    </div>
+
+{#                    Affichage de tous les commentaire et avis des clients   #}
+                    {% for comment in ad.comments %}
+                        <div class="bg-dark rounded text-light m-1 p-3">
+                            <div class="row">
+                                <div class="col-9">
+                                    <img src="{{ comment.author.picture }}" alt="" class="nn-avatar avatar-mini">
+                                    <strong>{{ comment.author.fullName }} :</strong>
+                                </div>
+                                <div class="col-3">
+                                    <em><small>{{ comment.createdAt | date('d/m/Y') }}</small></em>
+                                </div>
+                            </div>
+                            <blockquote>
+                                {{ comment.content }}
+                            </blockquote>
+                            <em>Note:</em>
+                            {% include 'partials/rating.html.twig' with {'rating' : comment.rating} %}
+                            <strong>étoile{% if comment.rating > 1 %}s{% endif %}</strong>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="bg-dark text-white-50 p-5">
+                        <h5><em>Soyez la premiere personne a commenter...</em></h5>
+                    </div>
+                {% endif %}
             </div>
             <div class="col nn-ad-user-info">
                 <div class="row">

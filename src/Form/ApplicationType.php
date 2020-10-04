@@ -10,16 +10,16 @@ class ApplicationType extends AbstractType
 {
     /**
      * @param string $label
-     * @param string|null $attrElt
+     * @param string|null $placeholder
      * @param array $options
      * @return array
      */
-    protected function getAttributes(string $label, ?string $attrElt = '...', array $options = []): array
+    protected function getAttributes(string $label, ?string $placeholder = '...', array $options = []): array
     {
-        return array_merge([
+        return array_merge_recursive([
             'label' => $label,
             'attr' => [
-                'placeholder' => $attrElt
+                'placeholder' => $placeholder
             ],
         ], $options);
     }

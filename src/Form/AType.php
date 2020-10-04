@@ -51,7 +51,7 @@ class AType extends ApplicationType
             ->add(
                 'price',
                 MoneyType::class,
-                $this->getAttributes('Prix par nuit', 'Montant en Fcfa')
+                $this->getAttributes('Prix par nuit', 'Montant XAF')
             )
             ->add(
                 'images',

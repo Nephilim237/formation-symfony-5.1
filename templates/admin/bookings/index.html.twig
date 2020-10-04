@@ -1,0 +1,47 @@
+{%  extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des reservations {% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-5">
+        <div class="card bg-dark text-white">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>Liste de toutes les reservations</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-stripped text-white">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Visiteur</th>
+                        <th>Annonce</th>
+                        <th>Prix (XAF)</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.id }}</td>
+                                <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
+                                <td>
+                                    <img src="{{ booking.booker.picture }}" alt="{{ booking.booker.fullName }}" class="nn-avatar avatar-micro">
+                                    {{ booking.booker.fullName }}
+                                </td>
+                                <td>{{ booking.ad.title }}</td>
+                                <td>XAF <span class="badge badge-primary">{{ booking.amount | number_format('1', ',', ' ')}} F</span></td>
+                                <td>
+                                    <a href="{{ path('admin_bookings_edit', {'id' : booking.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ path('admin_bookings_delete', {'id' : booking.id}) }}" class="btn btn-danger" onclick="return confirm('Voulez-vous supprimer la reservation {{ booking.id }} de {{ booking.booker.fullName }}?')"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

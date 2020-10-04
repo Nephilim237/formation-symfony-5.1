@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Editer la reservation {{ booking.id }} {% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-5">
+        <h1 class="text-primary font-weight-normal mb-5">Mettre a jour la reservation de {{ booking.booker.fullName }}</h1>
+        <div class="row">
+            <div class="col-md-6 form-wrapper">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i>
+                    Mettre a jour
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

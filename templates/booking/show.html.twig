@@ -10,7 +10,7 @@
 
         {% if app.request.query.get('g') %}
             <div class="alert alert-success text-center">
-                <h4 class="font-weight-bold">Succès!</h4>
+                <h4 class="alert-heading font-weight-bold">Succès!</h4>
                 <p class="">
                     Votre réservation auprès de
                     <a href="{{ path('user_show', {'slug' : author.slug}) }}"><strong>{{ author.fullName }}</strong></a>
@@ -24,20 +24,20 @@
         <div class="row">
             <div class="col">
                 <div class="alert alert-dark">
-                    <h3 class="font-weight-normal">Détails de la réservation</h3>
+                    <h3 class="alert-heading font-weight-normal text-success">Détails de la réservation</h3>
                     <dl class="row">
                         <dt class="col-md-4">#</dt> <dd class="col-md-8">{{ booking.id }}</dd>
                         <dt class="col-md-4">Arrivée</dt> <dd class="col-md-8">{{ booking.startDate | date('d/m/Y') }}</dd>
                         <dt class="col-md-4">Départ</dt> <dd class="col-md-8">{{ booking.endDate | date('d/m/Y') }}</dd>
                         <dt class="col-md-4">Durée du séjour</dt> <dd class="col-md-8">{{ booking.duration }} jour{% if booking.duration | length > 1 %}s{% endif %}</dd>
-                        <dt class="col-md-4">Montant</dt> <dd class="col-md-8"><strong>{{ booking.amount | number_format(0, '.', ' ') }}</strong> XAF</dd>
-                        <dt class="col-md-4">Commentaires</dt> <dd class="col-md-8">{{ booking.comments }}</dd>
+                        <dt class="col-md-4">Montant</dt> <dd class="col-md-8 text-success"><strong>{{ booking.amount | number_format(0, '.', ' ') }}</strong> XAF</dd>
+                        <dt class="col-md-4">Commentaires</dt> <dd class="col-md-8">{{ booking.comments | default('Aucun commentaire de votre part') }}</dd>
 
                     </dl>
                 </div>
                 <hr>
-                <div class="alert alert-info">
-                    <h4 class="font-weight-normal mb-3">Votre hôte</h4>
+                <div class="alert alert-dark">
+                    <h4 class="alert-heading font-weight-normal text-success mb-3">Votre hôte</h4>
                     <div class="row mb-3">
                         <div class="col-3">
                             <img src="{{ author.picture }}" alt="Avatar de {{ author.fullName }}" class="nn-avatar avatar-medium">
@@ -49,17 +49,39 @@
                         </div>
                     </div>
                     <p>{{ author.description | raw }}</p>
-                    <a href="{{ path('user_show', {'slug' : author.slug}) }}" class="btn btn-info">Voir son profil</a>
+                    <a href="{{ path('user_show', {'slug' : author.slug}) }}" class="btn btn-success">Voir son profil</a>
+                </div>
+
+                <div class="alert alert-light">
+                    <h3 class="alert-heading text-success">Vos avis</h3>
+                    {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                    {% if comment is not null %}
+                        <strong>{{ app.user.firstName }}: </strong><blockquote>{{ comment.content }}</blockquote>
+                        <strong>Note: </strong> {% include 'partials/rating.html.twig' with {'rating' : comment.rating} %}
+                    {% else %}
+                        <div class="alert alert-dark">
+                            <h3 class="alert-heading text-success">Exprimez votre satisfaction</h3>
+                            {% if date() > date(booking.startDate) %}
+                                <p class="h6 font-weight-normal">Avez-vous ete satisfait? Laissez nous un avis en commentaire</p>
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                <button type="submit" class="btn btn-success">Laisser un avis</button>
+                                {{ form_end(form) }}
+                            {% else %}
+                                <p class="h6 font-weight-normal">Ne peuvent donner un avis que, ceux qui y ont été.</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="col">
                 <div class="alert alert-dark">
-                    <h3 class="font-weight-normal">Votre Hébergement</h3>
+                    <h3 class="alert-heading font-weight-normal text-success">Votre Hébergement</h3>
                     <h5><a href="{{ path('ads_show', {'slug' : ad.slug}) }}">{{ ad.title }}</a></h5>
                     <img src="{{ ad.coverImage }}" alt="Couverture de l'annonce {{ ad.title }}" class="img-fluid">
                     {{ ad.content |raw }}
-                    <a href="{{ path('ads_show', {'slug' : ad.slug}) }}" class="btn btn-info">Plus d'informations</a>
+                    <a href="{{ path('ads_show', {'slug' : ad.slug}) }}" class="btn btn-success">Plus d'informations</a>
                 </div>
             </div>
         </div>

@@ -1,26 +1,31 @@
 {% set url = path('ads_show', {'slug' : ad.slug}) %}
 <div class="col-md-4">
     <div class="card bg-dark text-white-50 mb-3">
-        <div class="card-header text-center">
-            {{ ad.rooms }} chambres, <strong>{{ ad.price }} Fcfa / nuit</strong><br>
-            <small>Pas encore note</small>
+        <div class="card-header text-center text-success">
+            {{ ad.rooms }} chambres, <strong>{{ ad.price }} XAF / nuit</strong><br>
+
+            {% if ad.comments | length > 0 %}
+                {% include 'partials/rating.html.twig' with {'rating' : ad.avgRatings} %}
+            {% else %}
+                <small>Pas encore note</small>
+            {% endif %}
         </div>
         <a href="{{ url }}">
             <img src="{{ ad.coverImage }}" alt="Image de l'appartement" class="home-card-image">
         </a>
         <div class="card-body">
             <a href="{{ url }}">
-                <h4 class="card-title">
+                <h4 class="card-title text-success">
                     {{ ad.title }}
                 </h4>
             </a>
             <p class="card-text">
                 {{ ad.introduction }}
             </p>
-            <a href="{{ url }}" class="btn btn-secondary">Plus d'info!</a>
+            <a href="{{ url }}" class="btn btn-success">Plus d'info!</a>
 
             {% if app.user and app.user == ad.author %}
-            <a href="{{ path('ads_edit', {'slug' : ad.slug}) }}" class="btn btn-info">Modifier l'annonce</a>
+                <a href="{{ path('ads_edit', {'slug' : ad.slug}) }}" class="btn btn-success">Modifier l'annonce</a>
             {% endif %}
         </div>
     </div>

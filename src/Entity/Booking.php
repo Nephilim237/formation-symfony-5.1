@@ -36,7 +36,7 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Type("\DateTimeInterface", message="format de date invalide")
-     * @Assert\GreaterThan("today", message="Cette date n'est plus disponible (ou est deja passee)")
+     * @Assert\GreaterThan("today", message="Cette date n'est plus disponible (ou est deja passee)", groups={"front"})
      */
     private $startDate;
 
@@ -64,6 +64,7 @@ class Booking
 
     /**
      * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function prePersist()
     {
