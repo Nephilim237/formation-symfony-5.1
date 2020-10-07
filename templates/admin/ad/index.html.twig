@@ -18,7 +18,7 @@
             </thead>
 
             <tbody>
-                {% for ad in ads %}
+                {% for ad in dataContain.getData %}
                 <tr>
                     <td>{{ ad.id }}</td>
                     <td>{{ ad.title }}</td>
@@ -40,5 +40,8 @@
                 {% endfor %}
             </tbody>
         </table>
+
+{#       ===== Bottom Pagination inclusion ========     #}
+        {{ dataContain.display() }}
     </div>
 {% endblock %}

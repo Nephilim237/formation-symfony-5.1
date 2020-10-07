@@ -84,7 +84,7 @@ class Booking
     {
         //On determine d'abord les
         //Jours non disponibles, une reservation a deja ete faite durant ces périodes
-        //Fonction presente dans l'entite Ad
+        //Fonction presentes dans l'entite Ad
         $notAvailableDays = $this->ad->getNotAvailableDays();
 
         //Ensuite on determine les

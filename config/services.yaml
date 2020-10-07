@@ -31,3 +31,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     Doctrine\Common\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
+
+    App\Service\Paginator:
+        arguments:
+            $templatePath: 'admin/partials/pagination.html.twig'

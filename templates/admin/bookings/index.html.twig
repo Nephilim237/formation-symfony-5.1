@@ -23,7 +23,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        {% for booking in bookings %}
+                        {% for booking in dataContain.getData %}
                             <tr>
                                 <td>{{ booking.id }}</td>
                                 <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
@@ -41,6 +41,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
+
+{#                ======== Pagination inclusion ======= #}
+                {{ dataContain.display() }}
             </div>
         </div>
     </div>

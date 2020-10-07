@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AType;
 use App\Repository\AdRepository;
+use App\Service\Paginator;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,15 +17,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminAdController extends AbstractController
 {
     /**
-     * @Route("/admin/ads", name="admin_ads_index")
+     * @Route("/admin/ads/{page<\d+>?1}", name="admin_ads_index")
      *
      * @param AdRepository $repo
+     * @param Paginator $paginator
+     * @param int $page
      * @return Response
      */
-    public function index(AdRepository $repo)
+    public function index(AdRepository $repo, Paginator $paginator, $page)
     {
+        $paginator  ->setEntityClass(Ad::class)
+                    ->setCurrentPage($page)
+        ;
+
         return $this->render('admin/ad/index.html.twig', [
-            'ads' => $repo->findAll(),
+            'dataContain' => $paginator
         ]);
     }
 
