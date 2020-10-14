@@ -3,7 +3,7 @@
 {% block title %}Faire une reservation{% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="/dist/css/bootstrap-datepicker-1.9.0.min.css" />
+<link rel="stylesheet" href="{{ asset('build/css/bootstrap-datepicker.css') }}" />
 {% endblock %}
 
 {% block body %}
@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="/dist/js/bootstrap-datepicker-1.9.0.min.js"></script>
+<script src="{{ asset('build/js/bootstrap-datepicker.js') }}"></script>
 
     <script>
         $(document).ready(function(){

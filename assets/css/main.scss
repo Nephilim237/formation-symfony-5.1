@@ -1,3 +1,5 @@
+@import url('bootstrap-4.5.2.min.css');
+
 :root {
     --nn-white: #f4fcfd;
 }
@@ -26,11 +28,11 @@ div.nn-ad-title {
     padding: 3rem;
     background-size: cover;
     background-position: center center;
-}
 
-div.nn-ad-title h1, div.nn-ad-title p {
-    color: var(--nn-white);
-    text-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    h1, p {
+        color: var(--nn-white);
+        text-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    }
 }
 
 .carousel-caption {
@@ -46,21 +48,21 @@ div.nn-ad-title h1, div.nn-ad-title p {
     max-height: 128px;
     max-width: 128px;
     border-radius: 50%;
-}
 
-.avatar-medium {
-    max-height: 64px;
-    max-width: 64px;
-}
+    &.avatar-medium {
+        max-height: 64px;
+        max-width: 64px;
+    }
 
-.avatar-mini {
-    max-height: 32px;
-    max-width: 32px;
-}
+    &.avatar-micro {
+        max-height: 32px;
+        max-width: 32px;
+    }
 
-.avatar-micro {
-    max-height: 24px;
-    max-width: 24px;
+    &.avatar-mini {
+        max-height: 24px;
+        max-width: 24px;
+    }
 }
 
 .nn-ad-wrapper {
@@ -69,10 +71,6 @@ div.nn-ad-title h1, div.nn-ad-title p {
 
 .nn-ad-user-info {
     margin-left: 1rem;
-}
-
-.nn-ad-info {
-
 }
 
 span.rating i {

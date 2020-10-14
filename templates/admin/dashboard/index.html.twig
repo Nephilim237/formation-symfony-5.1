@@ -1,0 +1,145 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Tableau des stats{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card bg-dark text-white mb-3 text-center">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title">Utilisateurs inscrits</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{ stats.users }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white mb-3 text-center">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fas fa-hotel fa-3x"></i>
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title">Annonces publiées</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{ stats.ads }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-primary text-white mb-3 text-center">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fas fa-folder fa-3x"></i>
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title">Reservations</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{ stats.bookings }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white mb-3 text-center">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fas fa-comments fa-3x"></i>
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title">Avis d'utilisateurs</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{ stats.comments }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card bg-success text-white">
+                <div class="card-header">
+                    <h4 class="font-weight-normal d-flex justify-content-between align-items-center">
+                        <i class="fas fa-angle-double-up"></i>Les meilleures annonces
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-stripped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Annonce</th>
+                                <th>Propriétaire</th>
+                                <th>Moyenne</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-white">
+                        {% for ad in bestAds %}
+                            <tr>
+                                <td>{{ ad.title }}</td>
+                                <td>
+                                    <img src="{{ ad.picture }}" alt="{{ ad.firstName }}" class="nn-avatar avatar-micro">
+                                    {{ ad.firstName }} {{ ad.lastName }}
+                                </td>
+                                <td>{{ ad.note }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card bg-warning text-white">
+                <div class="card-header">
+                    <h4 class="font-weight-normal d-flex justify-content-between align-items-center">
+                        <i class="fas fa-angle-double-down"></i>Les pires annonces
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-stripped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Annonce</th>
+                            <th>Propriétaire</th>
+                            <th>Moyenne</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-white">
+                        {% for ad in worstAds %}
+                            <tr>
+                                <td>{{ ad.title }}</td>
+                                <td>
+                                    <img src="{{ ad.picture }}" alt="{{ ad.firstName }}" class="nn-avatar avatar-micro">
+                                    {{ ad.firstName }} {{ ad.lastName }}
+                                </td>
+                                <td>{{ ad.note }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

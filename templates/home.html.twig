@@ -16,86 +16,29 @@
 
         <h3 class="h2 mt-3 mb-4 text-primary font-weight-normal">Nos meilleurs appartements</h3>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card bg-dark text-light mb-3">
-                    <div class="card-header text-center">
-                        3 chambres, <strong>129.900 Fcfa / nuit</strong><br>
-                        <small>Pas encore note</small>
-                    </div>
-                    <img src="/dist/img/bg2.jpg" alt="Image de l'appartement" class="home-card-image">
-                    <div class="card-body">
-                        <h4 class="card-title">La chimamelure de l'appartement</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolore dolorum laborum suscipit vitae, voluptate! Aperiam exercitationem.
-                        </p>
-                        <a href="" class="btn btn-primary">Plus d'info!</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-dark text-light mb-3">
-                    <div class="card-header text-center">
-                        3 chambres, <strong>129.900 Fcfa / nuit</strong><br>
-                        <small>Pas encore note</small>
-                    </div>
-                    <img src="/dist/img/bg4.jpg" alt="Image de l'appartement" class="home-card-image">
-                    <div class="card-body">
-                        <h4 class="card-title">La chimamelure de l'appartement</h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolore dolorum laborum suscipit vitae, voluptate! Aperiam exercitationem.
-                        </p>
-                        <a href="" class="btn btn-primary">Plus d'info!</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-dark text-light mb-3">
-                    <div class="card-header text-center">
-                        3 chambres, <strong>129.900 Fcfa / nuit</strong><br>
-                        <small>Pas encore note</small>
-                    </div>
-                    <img src="/dist/img/bg3.jpg" alt="Image de l'appartement" class="home-card-image">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            La chimamelure de l'appartement
-                        </h4>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolore dolorum laborum suscipit vitae, voluptate! Aperiam exercitationem.
-                        </p>
-                        <a href="" class="btn btn-primary">Plus d'info!</a>
-                    </div>
-                </div>
-            </div>
+            {% for ad in ads %}
+                {% include 'ad/_ad.html.twig' with {'ad' : ad.annonce} %}
+            {% endfor %}
         </div>
 
         <h4 class="h2 mt-3 mb-4 text-primary font-weight-normal">Nos hébergeurs VIP</h4>
         <div class="row">
+            {% for u in users %}
             <div class="col">
                 <div class="card border-secondary mb-3">
+                    <div class="card-header align-items-center d-flex">
+                        <img src="{{ u.user.picture }}" alt="{{ u.user.firstName }}" class="nn-avatar avatar-medium float-left mr-3">
+                        <h4 class="card-title">{{ u.user.fullName }}</h4>
+                        <p class="lead"><a href="{{ path('user_show', {'slug' : u.user.slug}) }}" class="btn btn-success ml-5">Voir profil</a></p>
+                    </div>
                     <div class="card-body">
-                        <h4 class="card-title">S Le Nephilim</h4>
-                        <hr>
                         <div class="card-text">
-                            <img src="/dist/img/12.png" alt="Image de profil" class="home-card-profil float-left mr-3">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus assumenda, autem cumque dicta error iusto, natus, nulla officiis placeat quasi sit vero voluptas voluptate. Alias cumque minus obcaecati reprehenderit voluptates!</p>
-                            <p class="lead"><a href="#" class="btn btn-success float-right">Plus d'info!</a></p>
+                            <p>{{u.user.description | raw}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card border-secondary mb-3">
-                    <div class="card-body">
-                        <h4 class="card-title">S Le Nephilim</h4>
-                        <hr>
-                        <div class="card-text">
-                            <img src="/dist/img/12.png" alt="Image de profil" class="home-card-profil float-left mr-3">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus assumenda, autem cumque dicta error iusto, natus, nulla officiis placeat quasi sit vero voluptas voluptate. Alias cumque minus obcaecati reprehenderit voluptates!</p>
-                            <p class="lead"><a href="#" class="btn btn-success float-right">Plus d'info!</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
